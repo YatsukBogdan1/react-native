@@ -1,19 +1,19 @@
 /**
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
+ * @providesModule InputAccessoryView
  * @flow
  * @format
  */
 'use strict';
 
-const DeprecatedColorPropType = require('DeprecatedColorPropType');
-const DeprecatedViewPropTypes = require('DeprecatedViewPropTypes');
-const Platform = require('Platform');
+const ColorPropType = require('ColorPropType');
 const React = require('React');
 const StyleSheet = require('StyleSheet');
+const ViewPropTypes = require('ViewPropTypes');
 
 const requireNativeComponent = require('requireNativeComponent');
 
@@ -84,16 +84,12 @@ type Props = {
    * specified TextInput(s).
    */
   nativeID?: string,
-  style?: DeprecatedViewPropTypes.style,
-  backgroundColor?: DeprecatedColorPropType,
+  style?: ViewPropTypes.style,
+  backgroundColor?: ColorPropType,
 };
 
 class InputAccessoryView extends React.Component<Props> {
   render(): React.Node {
-    if (Platform.OS !== 'ios') {
-      console.warn('<InputAccessoryView> is only supported on iOS.');
-    }
-
     if (React.Children.count(this.props.children) === 0) {
       return null;
     }

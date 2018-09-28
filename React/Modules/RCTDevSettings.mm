@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) 2015-present, Facebook, Inc.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -18,6 +18,7 @@
 #import "RCTEventDispatcher.h"
 #import "RCTJSCSamplingProfiler.h"
 #import "RCTLog.h"
+#import "RCTPackagerClient.h"
 #import "RCTProfile.h"
 #import "RCTUtils.h"
 
@@ -34,7 +35,6 @@ static NSString *const kRCTDevSettingStartSamplingProfilerOnLaunch = @"startSamp
 static NSString *const kRCTDevSettingsUserDefaultsKey = @"RCTDevMenu";
 
 #if ENABLE_PACKAGER_CONNECTION
-#import "RCTPackagerClient.h"
 #import "RCTPackagerConnection.h"
 #endif
 
@@ -201,7 +201,6 @@ RCT_EXPORT_MODULE()
 #endif
 }
 
-#if ENABLE_PACKAGER_CONNECTION
 static void pokeSamplingProfiler(RCTBridge *const bridge, RCTPackagerClientResponder *const responder)
 {
   if (!bridge) {
@@ -225,7 +224,6 @@ static void pokeSamplingProfiler(RCTBridge *const bridge, RCTPackagerClientRespo
     [responder respondWithResult:results];
   }
 }
-#endif
 
 - (dispatch_queue_t)methodQueue
 {

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -10,7 +10,6 @@
 
 'use strict';
 
-jest.mock('path');
 jest.mock('fs');
 
 const getProjectConfig = require('../../android').projectConfig;
@@ -36,13 +35,6 @@ describe('android::getProjectConfig', () => {
         android: {},
       },
     });
-  });
-
-  it("returns `null` if manifest file hasn't been found and userConfig is not defined", () => {
-    const userConfig = undefined;
-    const folder = '/noManifest';
-
-    expect(getProjectConfig(folder, userConfig)).toBeNull();
   });
 
   it("returns `null` if manifest file hasn't been found", () => {

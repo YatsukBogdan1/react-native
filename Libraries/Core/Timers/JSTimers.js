@@ -1,9 +1,10 @@
 /**
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) 2015-present, Facebook, Inc.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
+ * @providesModule JSTimers
  * @format
  * @flow
  */
@@ -14,7 +15,6 @@ const Systrace = require('Systrace');
 
 const invariant = require('fbjs/lib/invariant');
 const {Timing} = require('NativeModules');
-const BatchedBridge = require('BatchedBridge');
 
 import type {ExtendedError} from 'parseErrorStack';
 
@@ -290,9 +290,6 @@ const JSTimers = {
    * @param {function} func Callback to be invoked before the end of the
    * current JavaScript execution loop.
    */
-  /* $FlowFixMe(>=0.79.1 site=react_native_fb) This comment suppresses an
-   * error found when Flow v0.79 was deployed. To see the error delete this
-   * comment and run Flow. */
   setImmediate: function(func: Function, ...args: any) {
     const id = _allocateCallback(
       () => func.apply(undefined, args),
@@ -305,9 +302,6 @@ const JSTimers = {
   /**
    * @param {function} func Callback to be invoked every frame.
    */
-  /* $FlowFixMe(>=0.79.1 site=react_native_fb) This comment suppresses an
-   * error found when Flow v0.79 was deployed. To see the error delete this
-   * comment and run Flow. */
   requestAnimationFrame: function(func: Function) {
     const id = _allocateCallback(func, 'requestAnimationFrame');
     Timing.createTimer(id, 1, Date.now(), /* recurring */ false);
@@ -319,9 +313,6 @@ const JSTimers = {
    * with time remaining in frame.
    * @param {?object} options
    */
-  /* $FlowFixMe(>=0.79.1 site=react_native_fb) This comment suppresses an
-   * error found when Flow v0.79 was deployed. To see the error delete this
-   * comment and run Flow. */
   requestIdleCallback: function(func: Function, options: ?Object) {
     if (requestIdleCallbacks.length === 0) {
       Timing.setSendIdleEvents(true);
@@ -492,20 +483,13 @@ const JSTimers = {
   },
 };
 
-let ExportedJSTimers;
 if (!Timing) {
   console.warn("Timing native module is not available, can't set timers.");
   // $FlowFixMe: we can assume timers are generally available
-  ExportedJSTimers = ({
+  module.exports = ({
     callImmediates: JSTimers.callImmediates,
     setImmediate: JSTimers.setImmediate,
   }: typeof JSTimers);
 } else {
-  ExportedJSTimers = JSTimers;
+  module.exports = JSTimers;
 }
-
-BatchedBridge.setImmediatesCallback(
-  ExportedJSTimers.callImmediates.bind(ExportedJSTimers),
-);
-
-module.exports = ExportedJSTimers;

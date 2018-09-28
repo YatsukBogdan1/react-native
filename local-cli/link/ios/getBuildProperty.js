@@ -1,10 +1,8 @@
 /**
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) 2015-present, Facebook, Inc.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
- *
- * @format
  */
 
 /**
@@ -20,12 +18,8 @@
  */
 module.exports = function getBuildProperty(project, prop) {
   const target = project.getFirstTarget().firstTarget;
-  const config = project.pbxXCConfigurationList()[
-    target.buildConfigurationList
-  ];
-  const buildSection = project.pbxXCBuildConfigurationSection()[
-    config.buildConfigurations[0].value
-  ];
+  const config = project.pbxXCConfigurationList()[target.buildConfigurationList];
+  const buildSection = project.pbxXCBuildConfigurationSection()[config.buildConfigurations[0].value];
 
   return buildSection.buildSettings[prop];
 };

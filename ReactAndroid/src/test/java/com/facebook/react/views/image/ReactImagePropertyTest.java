@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) 2015-present, Facebook, Inc.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -20,7 +20,6 @@ import com.facebook.react.bridge.JavaOnlyMap;
 import com.facebook.react.uimanager.ReactStylesDiffMap;
 import com.facebook.react.uimanager.DisplayMetricsHolder;
 import com.facebook.react.uimanager.ThemedReactContext;
-import com.facebook.soloader.SoLoader;
 
 import org.junit.After;
 import org.junit.Before;
@@ -54,7 +53,6 @@ public class ReactImagePropertyTest {
 
   @Before
   public void setup() {
-    SoLoader.setInTestMode();
     mContext = new ReactApplicationContext(RuntimeEnvironment.application);
     mCatalystInstanceMock = ReactTestHelper.createMockCatalystInstance();
     mContext.initializeWithInstance(mCatalystInstanceMock);

@@ -1,16 +1,11 @@
 #!/bin/bash
-# Copyright (c) Facebook, Inc. and its affiliates.
-#
-# This source code is licensed under the MIT license found in the
-# LICENSE file in the root directory of this source tree.
-#
+
 # Runs an Android emulator locally.
 # If there already is a running emulator, this just uses that.
 # The only reason to use this config is that it represents a known-good
 # virtual device configuration.
 # This is useful for running integration tests on a local machine.
-
-THIS_DIR=$(cd -P "$(dirname "$(readlink "${BASH_SOURCE[0]}" || echo "${BASH_SOURCE[0]}")")" && pwd)
+# TODO: make continuous integration use the precise same setup
 
 STATE=`adb get-state`
 
@@ -19,11 +14,6 @@ if [ -n "$STATE" ]; then
     exit 1
 fi
 
-echo "Installing packages"
-source "${THIS_DIR}/android-setup.sh" && getAndroidPackages
-
-echo "Creating Android virtual device..."
-source "${THIS_DIR}/android-setup.sh" && createAVD
-
-echo "Launching Android virtual device..."
-source "${THIS_DIR}/android-setup.sh" && launchAVD
+echo "Creating virtual device..."
+echo no | android create avd -n testAVD -f -t android-23 --abi default/x86
+emulator -avd testAVD

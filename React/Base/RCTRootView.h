@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) 2015-present, Facebook, Inc.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -30,12 +30,7 @@ typedef NS_ENUM(NSInteger, RCTRootViewSizeFlexibility) {
  * after the application has loaded. This is used to hide the `loadingView`, and
  * is a good indicator that the application is ready to use.
  */
-#if defined(__cplusplus)
-extern "C"
-#else
-extern
-#endif
-NSString *const RCTContentDidAppearNotification;
+extern NSString *const RCTContentDidAppearNotification;
 
 /**
  * Native view used to host React-managed views within the app. Can be used just

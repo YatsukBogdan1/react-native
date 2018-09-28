@@ -1,34 +1,30 @@
 /**
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) 2015-present, Facebook, Inc.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
+ * @providesModule ImageStylePropTypes
  * @flow
  * @format
  */
 'use strict';
 
-const DeprecatedColorPropType = require('DeprecatedColorPropType');
-const LayoutPropTypes = require('LayoutPropTypes');
-const ReactPropTypes = require('prop-types');
-const DeprecatedShadowPropTypesIOS = require('DeprecatedShadowPropTypesIOS');
-const DeprecatedTransformPropTypes = require('DeprecatedTransformPropTypes');
+var ColorPropType = require('ColorPropType');
+var ImageResizeMode = require('ImageResizeMode');
+var LayoutPropTypes = require('LayoutPropTypes');
+var ReactPropTypes = require('prop-types');
+var ShadowPropTypesIOS = require('ShadowPropTypesIOS');
+var TransformPropTypes = require('TransformPropTypes');
 
-const ImageStylePropTypes = {
+var ImageStylePropTypes = {
   ...LayoutPropTypes,
-  ...DeprecatedShadowPropTypesIOS,
-  ...DeprecatedTransformPropTypes,
-  resizeMode: ReactPropTypes.oneOf([
-    'center',
-    'contain',
-    'cover',
-    'repeat',
-    'stretch',
-  ]),
+  ...ShadowPropTypesIOS,
+  ...TransformPropTypes,
+  resizeMode: ReactPropTypes.oneOf(Object.keys(ImageResizeMode)),
   backfaceVisibility: ReactPropTypes.oneOf(['visible', 'hidden']),
-  backgroundColor: DeprecatedColorPropType,
-  borderColor: DeprecatedColorPropType,
+  backgroundColor: ColorPropType,
+  borderColor: ColorPropType,
   borderWidth: ReactPropTypes.number,
   borderRadius: ReactPropTypes.number,
   overflow: ReactPropTypes.oneOf(['visible', 'hidden']),
@@ -36,7 +32,7 @@ const ImageStylePropTypes = {
   /**
    * Changes the color of all the non-transparent pixels to the tintColor.
    */
-  tintColor: DeprecatedColorPropType,
+  tintColor: ColorPropType,
   opacity: ReactPropTypes.number,
   /**
    * When the image has rounded corners, specifying an overlayColor will

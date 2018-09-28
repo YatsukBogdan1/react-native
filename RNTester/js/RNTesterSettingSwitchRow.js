@@ -1,13 +1,12 @@
 /**
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) 2015-present, Facebook, Inc.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @format
- * @flow strict-local
+ * @providesModule RNTesterSettingSwitchRow
+ * @flow
  */
-
 'use strict';
 
 const React = require('React');
@@ -17,10 +16,7 @@ const Text = require('Text');
 const RNTesterStatePersister = require('./RNTesterStatePersister');
 const View = require('View');
 
-class RNTesterSettingSwitchRow extends React.Component<
-  $FlowFixMeProps,
-  $FlowFixMeState,
-> {
+class RNTesterSettingSwitchRow extends React.Component<$FlowFixMeProps, $FlowFixMeState> {
   UNSAFE_componentWillReceiveProps(newProps) {
     const {onEnable, onDisable, persister} = this.props;
     if (newProps.persister.state !== persister.state) {
@@ -34,7 +30,7 @@ class RNTesterSettingSwitchRow extends React.Component<
         <Text>{label}</Text>
         <Switch
           value={persister.state}
-          onValueChange={value => {
+          onValueChange={(value) => {
             persister.setState(() => value);
           }}
         />
@@ -49,11 +45,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
 });
-RNTesterSettingSwitchRow = RNTesterStatePersister.createContainer(
-  RNTesterSettingSwitchRow,
-  {
-    cacheKeySuffix: ({label}) => 'Switch:' + label,
-    getInitialState: ({initialValue}) => initialValue,
-  },
-);
+RNTesterSettingSwitchRow = RNTesterStatePersister.createContainer(RNTesterSettingSwitchRow, {
+  cacheKeySuffix: ({label}) => 'Switch:' + label,
+  getInitialState: ({initialValue}) => initialValue,
+});
 module.exports = RNTesterSettingSwitchRow;

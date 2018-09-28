@@ -1,13 +1,12 @@
 /**
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) 2015-present, Facebook, Inc.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @format
+ * @providesModule StaticContainer.react
  * @flow
  */
-
 'use strict';
 
 const React = require('React');
@@ -28,16 +27,18 @@ const React = require('React');
  * React reconciliation.
  */
 class StaticContainer extends React.Component<Object> {
+
   shouldComponentUpdate(nextProps: Object): boolean {
     return !!nextProps.shouldUpdate;
   }
 
   render() {
     const child = this.props.children;
-    return child === null || child === false
+    return (child === null || child === false)
       ? null
       : React.Children.only(child);
   }
+
 }
 
 module.exports = StaticContainer;

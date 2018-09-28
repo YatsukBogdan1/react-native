@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) 2015-present, Facebook, Inc.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -19,11 +19,9 @@ import com.facebook.react.modules.core.PermissionAwareActivity;
 import com.facebook.react.modules.core.PermissionListener;
 
 /**
- * @deprecated
- * ReactFragmentActivity will be removed in 0.57 release.
- * Use {@link ReactActivity} instead.
+ * Base Activity for React Native applications. Like {@link ReactActivity} but extends
+ * {@link FragmentActivity} instead of {@link android.app.Activity}.
  */
-@Deprecated
 public abstract class ReactFragmentActivity extends FragmentActivity implements
   DefaultHardwareBackBtnHandler, PermissionAwareActivity {
 

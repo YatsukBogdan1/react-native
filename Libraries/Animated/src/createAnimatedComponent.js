@@ -1,9 +1,10 @@
 /**
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) 2015-present, Facebook, Inc.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
+ * @providesModule createAnimatedComponent
  * @flow
  * @format
  */
@@ -18,7 +19,7 @@ const invariant = require('fbjs/lib/invariant');
 
 function createAnimatedComponent(Component: any): any {
   invariant(
-    typeof Component !== 'function' ||
+    typeof Component === 'string' ||
       (Component.prototype && Component.prototype.isReactComponent),
     '`createAnimatedComponent` does not support stateless functional components; ' +
       'use a class component instead.',

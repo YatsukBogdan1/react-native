@@ -1,16 +1,16 @@
 /**
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) 2015-present, Facebook, Inc.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @format
+ * @providesModule ElementProperties
  * @flow
  */
-
 'use strict';
 
 const BoxInspector = require('BoxInspector');
+const PropTypes = require('prop-types');
 const React = require('React');
 const StyleInspector = require('StyleInspector');
 const StyleSheet = require('StyleSheet');
@@ -23,23 +23,32 @@ const flattenStyle = require('flattenStyle');
 const mapWithSeparator = require('mapWithSeparator');
 const openFileInEditor = require('openFileInEditor');
 
-import type {ViewStyleProp} from 'StyleSheet';
+import type {DangerouslyImpreciseStyleProp} from 'StyleSheet';
 
-type Props = $ReadOnly<{|
+class ElementProperties extends React.Component<{
   hierarchy: Array<$FlowFixMe>,
-  style?: ?ViewStyleProp,
-  source?: ?{
+  style?: DangerouslyImpreciseStyleProp,
+  source?: {
     fileName?: string,
     lineNumber?: number,
   },
-  frame?: ?Object,
-  selection?: ?number,
-  setSelection?: number => mixed,
-|}>;
+}> {
+  static propTypes = {
+    hierarchy: PropTypes.array.isRequired,
+    style: PropTypes.oneOfType([
+      PropTypes.object,
+      PropTypes.array,
+      PropTypes.number,
+    ]),
+    source: PropTypes.shape({
+      fileName: PropTypes.string,
+      lineNumber: PropTypes.number,
+    }),
+  };
 
-class ElementProperties extends React.Component<Props> {
   render() {
     const style = flattenStyle(this.props.style);
+    // $FlowFixMe found when converting React.createClass to ES6
     const selection = this.props.selection;
     let openFileButton;
     const source = this.props.source;
@@ -71,14 +80,16 @@ class ElementProperties extends React.Component<Props> {
                   style={[styles.breadItem, i === selection && styles.selected]}
                   // $FlowFixMe found when converting React.createClass to ES6
                   onPress={() => this.props.setSelection(i)}>
-                  <Text style={styles.breadItemText}>{hierarchyItem.name}</Text>
+                  <Text style={styles.breadItemText}>
+                    {hierarchyItem.name}
+                  </Text>
                 </TouchableHighlight>
               ),
-              i => (
+              (i) => (
                 <Text key={'sep-' + i} style={styles.breadSep}>
                   &#9656;
                 </Text>
-              ),
+              )
             )}
           </View>
           <View style={styles.row}>
@@ -86,7 +97,9 @@ class ElementProperties extends React.Component<Props> {
               <StyleInspector style={style} />
               {openFileButton}
             </View>
-            {<BoxInspector style={style} frame={this.props.frame} />}
+            {
+              // $FlowFixMe found when converting React.createClass to ES6
+            <BoxInspector style={style} frame={this.props.frame} />}
           </View>
         </View>
       </TouchableWithoutFeedback>
@@ -140,7 +153,7 @@ const styles = StyleSheet.create({
   openButtonTitle: {
     color: 'white',
     fontSize: 8,
-  },
+  }
 });
 
 module.exports = ElementProperties;

@@ -1,43 +1,44 @@
 /**
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) 2015-present, Facebook, Inc.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @format
+ * @providesModule LinkingExample
  */
-
 'use strict';
 
-const React = require('react');
-const {
+var React = require('react');
+var PropTypes = require('prop-types');
+var ReactNative = require('react-native');
+var {
   Linking,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
-} = require('react-native');
+} = ReactNative;
+var RNTesterBlock = require('./RNTesterBlock');
 
-const RNTesterBlock = require('./RNTesterBlock');
+class OpenURLButton extends React.Component {
+  static propTypes = {
+    url: PropTypes.string,
+  };
 
-type Props = $ReadOnly<{|
-  url?: ?string,
-|}>;
-
-class OpenURLButton extends React.Component<Props> {
   handleClick = () => {
     Linking.canOpenURL(this.props.url).then(supported => {
       if (supported) {
         Linking.openURL(this.props.url);
       } else {
-        console.log("Don't know how to open URI: " + this.props.url);
+        console.log('Don\'t know how to open URI: ' + this.props.url);
       }
     });
   };
 
   render() {
     return (
-      <TouchableOpacity onPress={this.handleClick}>
+      <TouchableOpacity
+        onPress={this.handleClick}>
         <View style={styles.button}>
           <Text style={styles.text}>Open {this.props.url}</Text>
         </View>
@@ -64,7 +65,7 @@ class IntentAndroidExample extends React.Component {
   }
 }
 
-const styles = StyleSheet.create({
+var styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',

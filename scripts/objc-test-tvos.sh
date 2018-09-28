@@ -1,9 +1,6 @@
 #!/bin/bash
-# Copyright (c) Facebook, Inc. and its affiliates.
-#
-# This source code is licensed under the MIT license found in the
-# LICENSE file in the root directory of this source tree.
-#
+set -ex
+
 # Script used to run tvOS tests.
 # If not arguments are passed to the script, it will only compile
 # the RNTester.
@@ -11,17 +8,14 @@
 # also run the RNTester integration test (needs JS and packager):
 # ./objc-test-tvos.sh test
 
-set -ex
-
 SCRIPTS=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 ROOT=$(dirname "$SCRIPTS")
 
 cd "$ROOT"
 
-export TEST_NAME="tvOS"
-export SCHEME="RNTester-tvOS"
-export SDK="appletvsimulator"
-export DESTINATION="platform=tvOS Simulator,name=Apple TV,OS=11.4"
+SCHEME="RNTester-tvOS"
+SDK="appletvsimulator"
+DESTINATION="platform=tvOS Simulator,name=Apple TV 1080p,OS=10.2"
 
 # If there's a "test" argument, pass it to the test script.
 . ./scripts/objc-test.sh $1

@@ -1,21 +1,22 @@
 /**
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) 2015-present, Facebook, Inc.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @format
+ * @providesModule ToolbarAndroid
  */
 
 'use strict';
 
-const DeprecatedColorPropType = require('DeprecatedColorPropType');
-const DeprecatedViewPropTypes = require('DeprecatedViewPropTypes');
 const Image = require('Image');
 const NativeMethodsMixin = require('NativeMethodsMixin');
-const PropTypes = require('prop-types');
 const React = require('React');
+const PropTypes = require('prop-types');
+const ReactNativeViewAttributes = require('ReactNativeViewAttributes');
 const UIManager = require('UIManager');
+const ViewPropTypes = require('ViewPropTypes');
+const ColorPropType = require('ColorPropType');
 
 const createReactClass = require('create-react-class');
 const requireNativeComponent = require('requireNativeComponent');
@@ -68,7 +69,7 @@ const ToolbarAndroid = createReactClass({
   mixins: [NativeMethodsMixin],
 
   propTypes: {
-    ...DeprecatedViewPropTypes,
+    ...ViewPropTypes,
     /**
      * Sets possible actions on the toolbar as part of the action menu. These are displayed as icons
      * or text on the right side of the widget. If they don't fit they are placed in an 'overflow'
@@ -82,14 +83,12 @@ const ToolbarAndroid = createReactClass({
      * `ifRoom` or `never`
      * * `showWithText`: boolean, whether to show text alongside the icon or not
      */
-    actions: PropTypes.arrayOf(
-      PropTypes.shape({
-        title: PropTypes.string.isRequired,
-        icon: optionalImageSource,
-        show: PropTypes.oneOf(['always', 'ifRoom', 'never']),
-        showWithText: PropTypes.bool,
-      }),
-    ),
+    actions: PropTypes.arrayOf(PropTypes.shape({
+      title: PropTypes.string.isRequired,
+      icon: optionalImageSource,
+      show: PropTypes.oneOf(['always', 'ifRoom', 'never']),
+      showWithText: PropTypes.bool
+    })),
     /**
      * Sets the toolbar logo.
      */
@@ -118,7 +117,7 @@ const ToolbarAndroid = createReactClass({
     /**
      * Sets the toolbar subtitle color.
      */
-    subtitleColor: DeprecatedColorPropType,
+    subtitleColor: ColorPropType,
     /**
      * Sets the toolbar title.
      */
@@ -126,7 +125,7 @@ const ToolbarAndroid = createReactClass({
     /**
      * Sets the toolbar title color.
      */
-    titleColor: DeprecatedColorPropType,
+    titleColor: ColorPropType,
     /**
      * Sets the content inset for the toolbar starting edge.
      *
@@ -185,9 +184,7 @@ const ToolbarAndroid = createReactClass({
           action.icon = resolveAssetSource(action.icon);
         }
         if (action.show) {
-          action.show = UIManager.getViewManagerConfig(
-            'ToolbarAndroid',
-          ).Constants.ShowAsAction[action.show];
+          action.show = UIManager.ToolbarAndroid.Constants.ShowAsAction[action.show];
         }
         nativeActions.push(action);
       }
@@ -207,6 +204,10 @@ const ToolbarAndroid = createReactClass({
   },
 });
 
-const NativeToolbar = requireNativeComponent('ToolbarAndroid');
+const NativeToolbar = requireNativeComponent('ToolbarAndroid', ToolbarAndroid, {
+  nativeOnly: {
+    nativeActions: true,
+  }
+});
 
 module.exports = ToolbarAndroid;

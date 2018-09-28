@@ -1,13 +1,12 @@
 /**
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) 2015-present, Facebook, Inc.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @format
+ * @providesModule parseErrorStack
  * @flow
  */
-
 'use strict';
 
 export type StackFrame = {
@@ -19,7 +18,6 @@ export type StackFrame = {
 
 export type ExtendedError = Error & {
   framesToPop?: number,
-  jsEngine?: string,
 };
 
 function parseErrorStack(e: ExtendedError): Array<StackFrame> {
@@ -31,9 +29,7 @@ function parseErrorStack(e: ExtendedError): Array<StackFrame> {
    * error found when Flow v0.54 was deployed. To see the error delete this
    * comment and run Flow. */
   const stacktraceParser = require('stacktrace-parser');
-  const stack = Array.isArray(e.stack)
-    ? e.stack
-    : stacktraceParser.parse(e.stack);
+  const stack = Array.isArray(e.stack) ? e.stack : stacktraceParser.parse(e.stack);
 
   let framesToPop = typeof e.framesToPop === 'number' ? e.framesToPop : 0;
   while (framesToPop--) {

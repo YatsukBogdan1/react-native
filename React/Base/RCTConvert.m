@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) 2015-present, Facebook, Inc.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -361,22 +361,7 @@ RCT_MULTI_ENUM_CONVERTER(UIDataDetectorTypes, (@{
   @"none": @(UIDataDetectorTypeNone),
   @"all": @(UIDataDetectorTypeAll),
 }), UIDataDetectorTypePhoneNumber, unsignedLongLongValue)
-
-#if WEBKIT_IOS_10_APIS_AVAILABLE
-RCT_MULTI_ENUM_CONVERTER(WKDataDetectorTypes, (@{
- @"phoneNumber": @(WKDataDetectorTypePhoneNumber),
- @"link": @(WKDataDetectorTypeLink),
- @"address": @(WKDataDetectorTypeAddress),
- @"calendarEvent": @(WKDataDetectorTypeCalendarEvent),
- @"trackingNumber": @(WKDataDetectorTypeTrackingNumber),
- @"flightNumber": @(WKDataDetectorTypeFlightNumber),
- @"lookupSuggestion": @(WKDataDetectorTypeLookupSuggestion),
- @"none": @(WKDataDetectorTypeNone),
- @"all": @(WKDataDetectorTypeAll),
- }), WKDataDetectorTypePhoneNumber, unsignedLongLongValue)
- #endif // WEBKIT_IOS_10_APIS_AVAILABLE
-
- #endif // !TARGET_OS_TV
+#endif
 
 RCT_ENUM_CONVERTER(UIKeyboardAppearance, (@{
   @"default": @(UIKeyboardAppearanceDefault),
@@ -700,8 +685,7 @@ RCT_ENUM_CONVERTER(YGPositionType, (@{
 
 RCT_ENUM_CONVERTER(YGWrap, (@{
   @"wrap": @(YGWrapWrap),
-  @"nowrap": @(YGWrapNoWrap),
-  @"wrap-reverse": @(YGWrapWrapReverse)
+  @"nowrap": @(YGWrapNoWrap)
 }), YGWrapNoWrap, intValue)
 
 RCT_ENUM_CONVERTER(RCTPointerEvents, (@{

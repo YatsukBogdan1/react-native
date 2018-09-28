@@ -1,10 +1,9 @@
 /**
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @format
  * @emails oncall+react_native
  */
 
@@ -40,6 +39,7 @@ describe('TaskQueue', () => {
     taskQueue = new TaskQueue({onMoreTasks});
     sequenceId = 0;
   });
+
 
   it('should run a basic task', () => {
     const task1 = createSequenceTask(1);

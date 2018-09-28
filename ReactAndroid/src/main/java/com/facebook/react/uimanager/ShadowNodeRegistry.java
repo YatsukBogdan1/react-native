@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) 2015-present, Facebook, Inc.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -28,7 +28,9 @@ public class ShadowNodeRegistry {
   }
 
   public void addRootNode(ReactShadowNode node) {
-    mThreadAsserter.assertNow();
+    // TODO(6242243): This should be asserted... but UIManagerModule is
+    // thread-unsafe and calls this on the wrong thread.
+    //mThreadAsserter.assertNow();
     int tag = node.getReactTag();
     mTagsToCSSNodes.put(tag, node);
     mRootTags.put(tag, true);

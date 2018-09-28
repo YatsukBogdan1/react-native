@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) 2015-present, Facebook, Inc.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -21,15 +21,12 @@ NSString *const RCTTextAttributesTagAttributeName = @"RCTTextAttributesTagAttrib
   if (self = [super init]) {
     _fontSize = NAN;
     _letterSpacing = NAN;
-    _lineHeight = NAN;
     _textDecorationStyle = NSUnderlineStyleSingle;
     _fontSizeMultiplier = NAN;
-    _maxFontSizeMultiplier = NAN;
     _alignment = NSTextAlignmentNatural;
     _baseWritingDirection = NSWritingDirectionNatural;
     _textShadowRadius = NAN;
     _opacity = NAN;
-    _textTransform = RCTTextTransformUndefined;
   }
 
   return self;
@@ -50,7 +47,6 @@ NSString *const RCTTextAttributesTagAttributeName = @"RCTTextAttributesTagAttrib
   _fontFamily = textAttributes->_fontFamily ?: _fontFamily;
   _fontSize = !isnan(textAttributes->_fontSize) ? textAttributes->_fontSize : _fontSize;
   _fontSizeMultiplier = !isnan(textAttributes->_fontSizeMultiplier) ? textAttributes->_fontSizeMultiplier : _fontSizeMultiplier;
-  _maxFontSizeMultiplier = !isnan(textAttributes->_maxFontSizeMultiplier) ? textAttributes->_maxFontSizeMultiplier : _maxFontSizeMultiplier;
   _fontWeight = textAttributes->_fontWeight ?: _fontWeight;
   _fontStyle = textAttributes->_fontStyle ?: _fontStyle;
   _fontVariant = textAttributes->_fontVariant ?: _fontVariant;
@@ -76,7 +72,6 @@ NSString *const RCTTextAttributesTagAttributeName = @"RCTTextAttributesTagAttrib
   _isHighlighted = textAttributes->_isHighlighted || _isHighlighted;  // *
   _tag = textAttributes->_tag ?: _tag;
   _layoutDirection = textAttributes->_layoutDirection != UIUserInterfaceLayoutDirectionLeftToRight ? textAttributes->_layoutDirection : _layoutDirection;
-  _textTransform = textAttributes->_textTransform != RCTTextTransformUndefined ? textAttributes->_textTransform : _textTransform;
 }
 
 - (NSDictionary<NSAttributedStringKey, id> *)effectiveTextAttributes
@@ -193,15 +188,7 @@ NSString *const RCTTextAttributesTagAttributeName = @"RCTTextAttributesTagAttrib
 
 - (CGFloat)effectiveFontSizeMultiplier
 {
-  bool fontScalingEnabled = !RCTHasFontHandlerSet() && _allowFontScaling;
-
-  if (fontScalingEnabled) {
-    CGFloat fontSizeMultiplier = !isnan(_fontSizeMultiplier) ? _fontSizeMultiplier : 1.0;
-    CGFloat maxFontSizeMultiplier = !isnan(_maxFontSizeMultiplier) ? _maxFontSizeMultiplier : 0.0;
-    return maxFontSizeMultiplier >= 1.0 ? fminf(maxFontSizeMultiplier, fontSizeMultiplier) : fontSizeMultiplier;
-  } else {
-    return 1.0;
-  }
+  return !RCTHasFontHandlerSet() && _allowFontScaling && !isnan(_fontSizeMultiplier) ? _fontSizeMultiplier : 1.0;
 }
 
 - (UIColor *)effectiveForegroundColor
@@ -224,21 +211,6 @@ NSString *const RCTTextAttributesTagAttributeName = @"RCTTextAttributesTagAttrib
   }
 
   return effectiveBackgroundColor ?: [UIColor clearColor];
-}
-
-- (NSString *)applyTextAttributesToText:(NSString *)text
-{
-  switch (_textTransform) {
-    case RCTTextTransformUndefined:
-    case RCTTextTransformNone:
-      return text;
-    case RCTTextTransformLowercase:
-      return [text lowercaseString];
-    case RCTTextTransformUppercase:
-      return [text uppercaseString];
-    case RCTTextTransformCapitalize:
-      return [text capitalizedString];
-  }
 }
 
 - (RCTTextAttributes *)copyWithZone:(NSZone *)zone
@@ -270,7 +242,6 @@ NSString *const RCTTextAttributesTagAttributeName = @"RCTTextAttributesTagAttrib
     RCTTextAttributesCompareObjects(_fontFamily) &&
     RCTTextAttributesCompareFloats(_fontSize) &&
     RCTTextAttributesCompareFloats(_fontSizeMultiplier) &&
-    RCTTextAttributesCompareFloats(_maxFontSizeMultiplier) &&
     RCTTextAttributesCompareStrings(_fontWeight) &&
     RCTTextAttributesCompareObjects(_fontStyle) &&
     RCTTextAttributesCompareObjects(_fontVariant) &&
@@ -291,8 +262,7 @@ NSString *const RCTTextAttributesTagAttributeName = @"RCTTextAttributesTagAttrib
     // Special
     RCTTextAttributesCompareOthers(_isHighlighted) &&
     RCTTextAttributesCompareObjects(_tag) &&
-    RCTTextAttributesCompareOthers(_layoutDirection) &&
-    RCTTextAttributesCompareOthers(_textTransform);
+    RCTTextAttributesCompareOthers(_layoutDirection);
 }
 
 @end

@@ -1,37 +1,36 @@
 /**
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) 2015-present, Facebook, Inc.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @format
+ * @providesModule ViewStylePropTypes
  * @flow
  */
-
 'use strict';
 
-const DeprecatedColorPropType = require('DeprecatedColorPropType');
+const ColorPropType = require('ColorPropType');
 const LayoutPropTypes = require('LayoutPropTypes');
 const ReactPropTypes = require('prop-types');
-const DeprecatedShadowPropTypesIOS = require('DeprecatedShadowPropTypesIOS');
-const DeprecatedTransformPropTypes = require('DeprecatedTransformPropTypes');
+const ShadowPropTypesIOS = require('ShadowPropTypesIOS');
+const TransformPropTypes = require('TransformPropTypes');
 
 /**
  * Warning: Some of these properties may not be supported in all releases.
  */
 const ViewStylePropTypes = {
   ...LayoutPropTypes,
-  ...DeprecatedShadowPropTypesIOS,
-  ...DeprecatedTransformPropTypes,
+  ...ShadowPropTypesIOS,
+  ...TransformPropTypes,
   backfaceVisibility: ReactPropTypes.oneOf(['visible', 'hidden']),
-  backgroundColor: DeprecatedColorPropType,
-  borderColor: DeprecatedColorPropType,
-  borderTopColor: DeprecatedColorPropType,
-  borderRightColor: DeprecatedColorPropType,
-  borderBottomColor: DeprecatedColorPropType,
-  borderLeftColor: DeprecatedColorPropType,
-  borderStartColor: DeprecatedColorPropType,
-  borderEndColor: DeprecatedColorPropType,
+  backgroundColor: ColorPropType,
+  borderColor: ColorPropType,
+  borderTopColor: ColorPropType,
+  borderRightColor: ColorPropType,
+  borderBottomColor: ColorPropType,
+  borderLeftColor: ColorPropType,
+  borderStartColor: ColorPropType,
+  borderEndColor: ColorPropType,
   borderRadius: ReactPropTypes.number,
   borderTopLeftRadius: ReactPropTypes.number,
   borderTopRightRadius: ReactPropTypes.number,

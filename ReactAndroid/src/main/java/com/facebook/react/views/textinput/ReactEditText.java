@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) 2015-present, Facebook, Inc.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -81,7 +81,6 @@ public class ReactEditText extends EditText {
   private @Nullable ScrollWatcher mScrollWatcher;
   private final InternalKeyListener mKeyListener;
   private boolean mDetectScrollMovement = false;
-  private boolean mOnKeyPress = false;
   private float mLetterSpacingPt = 0;
 
   private ReactViewBackgroundManager mReactBackgroundManager;
@@ -176,7 +175,7 @@ public class ReactEditText extends EditText {
   public InputConnection onCreateInputConnection(EditorInfo outAttrs) {
     ReactContext reactContext = (ReactContext) getContext();
     InputConnection inputConnection = super.onCreateInputConnection(outAttrs);
-    if (inputConnection != null && mOnKeyPress) {
+    if (inputConnection != null) {
       inputConnection = new ReactEditTextInputConnectionWrapper(inputConnection, reactContext, this);
     }
 
@@ -273,10 +272,6 @@ public class ReactEditText extends EditText {
 
   public void setBlurOnSubmit(@Nullable Boolean blurOnSubmit) {
     mBlurOnSubmit = blurOnSubmit;
-  }
-
-  public void setOnKeyPress(boolean onKeyPress) {
-    mOnKeyPress = onKeyPress;
   }
 
   public boolean getBlurOnSubmit() {
