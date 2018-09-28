@@ -17,6 +17,7 @@ const React = require('React');
 const invariant = require('fbjs/lib/invariant');
 const StyleSheet = require('StyleSheet');
 const View = require('View');
+const ColorPropType = require('ColorPropType');
 
 const requireNativeComponent = require('requireNativeComponent');
 
@@ -55,6 +56,11 @@ type Props = $ReadOnly<{|
    * Restricts the range of possible date/time values.
    */
   maximumDate?: ?Date,
+  
+  /**
+   * Text color.
+   */
+  textColor: ColorPropType,
 
   /**
    * Minimum date.
@@ -111,6 +117,7 @@ type Props = $ReadOnly<{|
 class DatePickerIOS extends React.Component<Props> {
   static DefaultProps = {
     mode: 'datetime',
+    textColor: '#000'
   };
 
   // $FlowFixMe How to type a native component to be able to call setNativeProps
@@ -161,6 +168,7 @@ class DatePickerIOS extends React.Component<Props> {
           minimumDate={
             props.minimumDate ? props.minimumDate.getTime() : undefined
           }
+          textColor={props.textColor}
           mode={props.mode}
           minuteInterval={props.minuteInterval}
           timeZoneOffsetInMinutes={props.timeZoneOffsetInMinutes}

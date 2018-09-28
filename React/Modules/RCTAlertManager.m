@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) 2015-present, Facebook, Inc.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -100,6 +100,8 @@ RCT_EXPORT_METHOD(alertWithArgs:(NSDictionary *)args
                                         alertControllerWithTitle:title
                                         message:nil
                                         preferredStyle:UIAlertControllerStyleAlert];
+  
+  alertController.view.tintColor = [UIColor colorWithRed: 6/255.0 green:163/255.7 blue:151/255.0 alpha:1.0];
   switch (type) {
     case RCTAlertViewStylePlainTextInput: {
       [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
